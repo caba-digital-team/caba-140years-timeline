@@ -3,63 +3,364 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CABA Timeline</title>
     <link rel="stylesheet" href="style.css">
-    <title>Horizontal Timeline</title>
+    <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
 
 <section class="cd-horizontal-timeline">
-    <div class="timeline">
+    <div class="track-section">
         <div class="events-wrapper">
             <div class="events">
                 <ol>
-                    <li><a href="#0" data-date="01/01/2024" class="selected">1 Jan</a></li>
-                    <li><a href="#0" data-date="15/02/2024">15 Feb</a></li>
-                    <li><a href="#0" data-date="20/03/2024">20 Mar</a></li>
-                    <li><a href="#0" data-date="10/05/2024">10 May</a></li>
-                    <li><a href="#0" data-date="01/07/2024">1 July</a></li>
+                    <li><a href="#0" data-date="01/01/1880" class="selected"><span class="year-label">1880</span></a></li>
+                    <li><a href="#0" data-date="01/01/1885"><span class="year-label">1885</span></a></li>
+                    <li><a href="#0" data-date="01/01/1886"><span class="year-label">1886</span></a></li>
+                    <li><a href="#0" data-date="01/01/1890"><span class="year-label">1880s–90s</span></a></li>
+                    <li><a href="#0" data-date="01/01/1892"><span class="year-label">1892</span></a></li>
+                    <li><a href="#0" data-date="01/01/1914"><span class="year-label">1914–18</span></a></li>
+                    <li><a href="#0" data-date="01/01/1920"><span class="year-label">Interwar</span></a></li>
+                    <li><a href="#0" data-date="01/01/1924"><span class="year-label">1924</span></a></li>
+                    <li><a href="#0" data-date="01/01/1939"><span class="year-label">1939–45</span></a></li>
+                    <li><a href="#0" data-date="01/01/1958"><span class="year-label">1958</span></a></li>
+                    <li><a href="#0" data-date="01/01/1970"><span class="year-label">1970s</span></a></li>
+                    <li><a href="#0" data-date="01/01/1978"><span class="year-label">1978</span></a></li>
+                    <li><a href="#0" data-date="01/01/2002"><span class="year-label">2002</span></a></li>
+                    <li><a href="#0" data-date="01/01/2005"><span class="year-label">2005</span></a></li>
+                    <li><a href="#0" data-date="01/01/2007"><span class="year-label">2007–08</span></a></li>
+                    <li><a href="#0" data-date="01/01/2010"><span class="year-label">2010</span></a></li>
+                    <li><a href="#0" data-date="01/01/2015"><span class="year-label">2015</span></a></li>
+                    <li><a href="#0" data-date="01/01/2025"><span class="year-label">2025</span></a></li>
+                    <li><a href="#0" data-date="01/01/2026"><span class="year-label">2026</span></a></li>
                 </ol>
                 <span class="filling-line" aria-hidden="true"></span>
             </div>
-        </div> 
+        </div>
         <ul class="cd-timeline-navigation">
-            <li><a href="#0" class="prev inactive">Prev</a></li>
-            <li><a href="#0" class="next">Next</a></li>
+            <li><a href="#0" class="prev inactive" aria-label="Previous"><i data-lucide="arrow-left"></i></a></li>
+            <li><a href="#0" class="next" aria-label="Next"><i data-lucide="arrow-right"></i></a></li>
         </ul>
     </div>
 
     <div class="events-content">
         <ol>
-            <li class="selected" data-date="01/01/2024">
-                <h2>Project Kickoff</h2>
-                <em>January 1st, 2024</em>
-                <p>This is where the journey began with our initial strategy meeting.</p>
+
+            <li class="selected" data-date="01/01/1880">
+                <div class="card-inner">
+                    <div class="card-accent">
+                        <div class="card-accent-top">
+                            <div class="card-year">1880</div>
+                            <div class="card-era">The founding</div>
+                        </div>
+                        <div class="card-accent-dots"><span></span><span></span></div>
+                    </div>
+                    <div class="card-body">
+                        <h2>a royal charter</h2>
+                        <p>Queen Victoria signs a Royal Charter creating the Institute of Chartered Accountants in England and Wales (ICAEW), establishing the professional body that caba would later support.</p>
+                    </div>
+                </div>
             </li>
-            <li data-date="15/02/2024">
-                <h2>Prototyping</h2>
-                <em>February 15th, 2024</em>
-                <p>First visual mockups were delivered and tested by the focus group.</p>
+
+            <li data-date="01/01/1885">
+                <div class="card-inner">
+                    <div class="card-accent">
+                        <div class="card-accent-top">
+                            <div class="card-year">1885</div>
+                            <div class="card-era">Early support</div>
+                        </div>
+                        <div class="card-accent-dots"><span></span><span></span></div>
+                    </div>
+                    <div class="card-body">
+                        <h2>the first collection</h2>
+                        <p>£50 is raised in Throgmorton Street by members of the ICAEW for a junior clerk afflicted by a terminal illness.</p>
+                    </div>
+                </div>
             </li>
-            <li data-date="20/03/2024">
-                <h2>Development Phase</h2>
-                <em>March 20th, 2024</em>
-                <p>The engineering team started the sprint cycles for the core engine.</p>
+
+            <li data-date="01/01/1886">
+                <div class="card-inner">
+                    <div class="card-accent">
+                        <div class="card-accent-top">
+                            <div class="card-year">24 March 1886</div>
+                            <div class="card-era">Formally constituted</div>
+                        </div>
+                        <div class="card-accent-dots"><span></span><span></span></div>
+                    </div>
+                    <div class="card-body">
+                        <h2>caba is born</h2>
+                        <p>The Chartered Accountant Benevolent Association is formally constituted, chaired by W.W. Deloitte and supported by 22 ICAEW council members.</p>
+                    </div>
+                </div>
             </li>
-            <li data-date="10/05/2024">
-                <h2>Beta Testing</h2>
-                <em>May 10th, 2024</em>
-                <p>External users were invited to try the platform for the first time.</p>
+
+            <li data-date="01/01/1890">
+                <div class="card-inner">
+                    <div class="card-accent">
+                        <div class="card-accent-top">
+                            <div class="card-year">1880s–1890s</div>
+                            <div class="card-era">Early grants</div>
+                        </div>
+                        <div class="card-accent-dots"><span></span><span></span></div>
+                    </div>
+                    <div class="card-body">
+                        <h2>rules &amp; policies established</h2>
+                        <p>Early support includes grants for health-related travel, recognising the impact of illness on financial stability.</p>
+                    </div>
+                </div>
             </li>
-            <li data-date="01/07/2024">
-                <h2>Official Launch</h2>
-                <em>July 1st, 2024</em>
-                <p>The product is now live and available to the general public.</p>
+
+            <li data-date="01/01/1892">
+                <div class="card-inner">
+                    <div class="card-accent">
+                        <div class="card-accent-top">
+                            <div class="card-year">1892</div>
+                            <div class="card-era">Overseas reach</div>
+                        </div>
+                        <div class="card-accent-dots"><span></span><span></span></div>
+                    </div>
+                    <div class="card-body">
+                        <h2>support reaches overseas</h2>
+                        <p>Following the death of Dr J. Westby Gibson, £20 is sent to Mrs Gibson in Melbourne to help support her family.</p>
+                    </div>
+                </div>
             </li>
+
+            <li data-date="01/01/1914">
+                <div class="card-inner">
+                    <div class="card-accent">
+                        <div class="card-accent-top">
+                            <div class="card-year">1914–1918</div>
+                            <div class="card-era">World War I</div>
+                        </div>
+                        <div class="card-accent-dots"><span></span><span></span></div>
+                    </div>
+                    <div class="card-body">
+                        <h2>first world war</h2>
+                        <p>Help for households affected by war, support for the injured and fatalities of war — widows and children.</p>
+                    </div>
+                </div>
+            </li>
+
+            <li data-date="01/01/1920">
+                <div class="card-inner">
+                    <div class="card-accent">
+                        <div class="card-accent-top">
+                            <div class="card-year">Interwar years</div>
+                            <div class="card-era">Growing support</div>
+                        </div>
+                        <div class="card-accent-dots"><span></span><span></span></div>
+                    </div>
+                    <div class="card-body">
+                        <h2>expanding the mission</h2>
+                        <p>Support expands to include exam coaching, helping aspiring accountants continue their professional journey.</p>
+                    </div>
+                </div>
+            </li>
+
+            <li data-date="01/01/1924">
+                <div class="card-inner">
+                    <div class="card-accent">
+                        <div class="card-accent-top">
+                            <div class="card-year">1924</div>
+                            <div class="card-era">Pensions</div>
+                        </div>
+                        <div class="card-accent-dots"><span></span><span></span></div>
+                    </div>
+                    <div class="card-body">
+                        <h2>pension advice &amp; grants</h2>
+                        <p>caba gives pension advice and grants as the Old Age Pensions Scheme changed.</p>
+                    </div>
+                </div>
+            </li>
+
+            <li data-date="01/01/1939">
+                <div class="card-inner">
+                    <div class="card-accent">
+                        <div class="card-accent-top">
+                            <div class="card-year">1939–1945</div>
+                            <div class="card-era">World War II</div>
+                        </div>
+                        <div class="card-accent-dots"><span></span><span></span></div>
+                    </div>
+                    <div class="card-body">
+                        <h2>second world war</h2>
+                        <p>Financial grants during times of rationing, displacement and rebuilding. Food parcels are sent to members across the UK by colleagues overseas.</p>
+                    </div>
+                </div>
+            </li>
+
+            <li data-date="01/01/1958">
+                <div class="card-inner">
+                    <div class="card-accent">
+                        <div class="card-accent-top">
+                            <div class="card-year">1958</div>
+                            <div class="card-era">A lasting legacy</div>
+                        </div>
+                        <div class="card-accent-dots"><span></span><span></span></div>
+                    </div>
+                    <div class="card-body">
+                        <h2>the merrett bequest</h2>
+                        <p>Henry Merrett bequeaths his estate to caba, strengthening the charity's ability to support future generations.</p>
+                    </div>
+                </div>
+            </li>
+
+            <li data-date="01/01/1970">
+                <div class="card-inner">
+                    <div class="card-accent">
+                        <div class="card-accent-top">
+                            <div class="card-year">1970s</div>
+                            <div class="card-era">Beyond finance</div>
+                        </div>
+                        <div class="card-accent-dots"><span></span><span></span></div>
+                    </div>
+                    <div class="card-body">
+                        <h2>more than money</h2>
+                        <p>Recognition that support is more than financial grants alone. Guidance and practical assistance begin to form a larger part of caba's work.</p>
+                    </div>
+                </div>
+            </li>
+
+            <li data-date="01/01/1978">
+                <div class="card-inner">
+                    <div class="card-accent">
+                        <div class="card-accent-top">
+                            <div class="card-year">1978</div>
+                            <div class="card-era">Centenary appeal</div>
+                        </div>
+                        <div class="card-accent-dots"><span></span><span></span></div>
+                    </div>
+                    <div class="card-body">
+                        <h2>the centenary appeal</h2>
+                        <p>The centenary appeal raises £750,000, strengthening the charity's long-term sustainability.</p>
+                    </div>
+                </div>
+            </li>
+
+            <li data-date="01/01/2002">
+                <div class="card-inner">
+                    <div class="card-accent">
+                        <div class="card-accent-top">
+                            <div class="card-year">2002</div>
+                            <div class="card-era">Digital era</div>
+                        </div>
+                        <div class="card-accent-dots"><span></span><span></span></div>
+                    </div>
+                    <div class="card-body">
+                        <h2>going online</h2>
+                        <p>caba's first website launches, making support and information accessible to the wider community for the first time online.</p>
+                    </div>
+                </div>
+            </li>
+
+            <li data-date="01/01/2005">
+                <div class="card-inner">
+                    <div class="card-accent">
+                        <div class="card-accent-top">
+                            <div class="card-year">2005</div>
+                            <div class="card-era">A pivotal year</div>
+                        </div>
+                        <div class="card-accent-dots"><span></span><span></span></div>
+                    </div>
+                    <div class="card-body">
+                        <h2>securing the future</h2>
+                        <p>The sale of Peacock Meadows helps secure caba's future, and the first telephone counselling helpline launches, expanding support beyond financial assistance.</p>
+                    </div>
+                </div>
+            </li>
+
+            <li data-date="01/01/2007">
+                <div class="card-inner">
+                    <div class="card-accent">
+                        <div class="card-accent-top">
+                            <div class="card-year">2007–2008</div>
+                            <div class="card-era">New services</div>
+                        </div>
+                        <div class="card-accent-dots"><span></span><span></span></div>
+                    </div>
+                    <div class="card-body">
+                        <h2>widening support</h2>
+                        <p>New services for those in debt, nearing retirement or out of work. Care and carer support introduced.</p>
+                    </div>
+                </div>
+            </li>
+
+            <li data-date="01/01/2010">
+                <div class="card-inner">
+                    <div class="card-accent">
+                        <div class="card-accent-top">
+                            <div class="card-year">2010</div>
+                            <div class="card-era">Students included</div>
+                        </div>
+                        <div class="card-accent-dots"><span></span><span></span></div>
+                    </div>
+                    <div class="card-body">
+                        <h2>supporting aca students</h2>
+                        <p>Support broadens further to include ACA students.</p>
+                    </div>
+                </div>
+            </li>
+
+            <li data-date="01/01/2015">
+                <div class="card-inner">
+                    <div class="card-accent">
+                        <div class="card-accent-top">
+                            <div class="card-year">2015</div>
+                            <div class="card-era">Wellbeing focus</div>
+                        </div>
+                        <div class="card-accent-dots"><span></span><span></span></div>
+                    </div>
+                    <div class="card-body">
+                        <h2>whole-community wellbeing</h2>
+                        <p>Support and resources broaden — looking after the wellbeing of the whole community.</p>
+                    </div>
+                </div>
+            </li>
+
+            <li data-date="01/01/2025">
+                <div class="card-inner">
+                    <div class="card-accent">
+                        <div class="card-accent-top">
+                            <div class="card-year">2025</div>
+                            <div class="card-era">New strategy</div>
+                        </div>
+                        <div class="card-accent-dots"><span></span><span></span></div>
+                    </div>
+                    <div class="card-body">
+                        <h2>refocused for the future</h2>
+                        <p>A new five-year strategy refocuses caba's work on those facing hardship and health challenges as pressures across the profession evolve.</p>
+                    </div>
+                </div>
+            </li>
+
+            <li data-date="01/01/2026">
+                <div class="card-inner">
+                    <div class="card-accent">
+                        <div class="card-accent-top">
+                            <div class="card-year">2026</div>
+                            <div class="card-era">140 years</div>
+                        </div>
+                        <div class="card-accent-dots"><span></span><span></span></div>
+                    </div>
+                    <div class="card-body">
+                        <h2>140 years of support</h2>
+                        <p>caba marks 140 years of support, continuing its mission to stand beside the ICAEW community through both everyday challenges and exceptional circumstances.</p>
+                    </div>
+                </div>
+            </li>
+
         </ol>
+    </div>
+
+    <div class="progress-row">
+        <div class="progress-bar-track"><div class="progress-bar-fill" id="progressFill"></div></div>
+        <span class="progress-count" id="progressCount">1 / 19</span>
     </div>
 </section>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src="script.js"></script>
+<script>lucide.createIcons();</script>
 </body>
 </html>
