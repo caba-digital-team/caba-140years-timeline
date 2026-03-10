@@ -1,3 +1,28 @@
+/* ── Effra font — update paths to match your hosted font files ── */
+@font-face {
+    font-family: 'Effra';
+    src: url('fonts/Effra-Regular.woff2') format('woff2'),
+         url('fonts/Effra-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Effra';
+    src: url('fonts/Effra-Medium.woff2') format('woff2'),
+         url('fonts/Effra-Medium.woff') format('woff');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Effra';
+    src: url('fonts/Effra-Bold.woff2') format('woff2'),
+         url('fonts/Effra-Bold.woff') format('woff');
+    font-weight: 700;
+    font-style: normal;
+}
+
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
