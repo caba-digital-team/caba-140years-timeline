@@ -1,0 +1,135 @@
+/* Custom properties for easy branding changes */
+:root {
+    --primary-color: #7b9d6f;
+    --line-color: #dfdfdf;
+    --text-main: #383838;
+    --text-muted: #959595;
+    --bg-color: #ffffff;
+}
+
+body {
+    background-color: var(--bg-color);
+    font-family: "Helvetica Neue", sans-serif;
+    color: var(--text-main);
+}
+
+.cd-horizontal-timeline {
+    opacity: 0;
+    margin: 2em auto;
+    transition: opacity 0.2s;
+}
+
+.cd-horizontal-timeline.loaded {
+    opacity: 1;
+}
+
+.cd-horizontal-timeline .timeline {
+    position: relative;
+    height: 100px;
+    width: 90%;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.cd-horizontal-timeline .events-wrapper {
+    position: relative;
+    height: 100%;
+    margin: 0 40px;
+    overflow: hidden;
+}
+
+.cd-horizontal-timeline .events {
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    top: 49px;
+    height: 2px;
+    background: var(--line-color);
+    transition: transform 0.4s;
+}
+
+.cd-horizontal-timeline .filling-line {
+    position: absolute;
+    z-index: 2;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    background-color: var(--primary-color);
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 0.3s;
+}
+
+.cd-horizontal-timeline .events a {
+    position: absolute;
+    bottom: 0;
+    z-index: 2;
+    text-align: center;
+    font-size: 0.8rem;
+    padding-bottom: 15px;
+    color: var(--text-main);
+    text-decoration: none;
+}
+
+.cd-horizontal-timeline .events a::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: -5px;
+    height: 12px;
+    width: 12px;
+    border-radius: 50%;
+    border: 2px solid var(--line-color);
+    background-color: var(--bg-color);
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+.cd-horizontal-timeline .events a.selected::after {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+/* Content Transitions */
+.cd-horizontal-timeline .events-content {
+    position: relative;
+    width: 100%;
+    margin: 2em 0;
+    overflow: hidden;
+}
+
+.cd-horizontal-timeline .events-content li {
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    left: 0;
+    top: 0;
+    transform: translateX(-100%);
+    padding: 0 5%;
+    opacity: 0;
+    list-style: none;
+    box-sizing: border-box;
+    transition: opacity 0.3s, transform 0.3s;
+}
+
+.cd-horizontal-timeline .events-content li.selected {
+    position: relative;
+    z-index: 2;
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Nav Arrows */
+.cd-timeline-navigation a {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 2px solid var(--line-color);
+    text-indent: -9999px;
+}
+.cd-timeline-navigation a.prev { left: 0; }
+.cd-timeline-navigation a.next { right: 0; }
