@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Horizontal Timeline</title>
+</head>
+<body>
+
+<section class="cd-horizontal-timeline">
+    <div class="timeline">
+        <div class="events-wrapper">
+            <div class="events">
+                <ol>
+                    <li><a href="#0" data-date="01/01/2024" class="selected">1 Jan</a></li>
+                    <li><a href="#0" data-date="15/02/2024">15 Feb</a></li>
+                    <li><a href="#0" data-date="20/03/2024">20 Mar</a></li>
+                    <li><a href="#0" data-date="10/05/2024">10 May</a></li>
+                    <li><a href="#0" data-date="01/07/2024">1 July</a></li>
+                </ol>
+                <span class="filling-line" aria-hidden="true"></span>
+            </div>
+        </div> 
+        <ul class="cd-timeline-navigation">
+            <li><a href="#0" class="prev inactive">Prev</a></li>
+            <li><a href="#0" class="next">Next</a></li>
+        </ul>
+    </div>
+
+    <div class="events-content">
+        <ol>
+            <li class="selected" data-date="01/01/2024">
+                <h2>Project Kickoff</h2>
+                <em>January 1st, 2024</em>
+                <p>This is where the journey began with our initial strategy meeting.</p>
+            </li>
+            <li data-date="15/02/2024">
+                <h2>Prototyping</h2>
+                <em>February 15th, 2024</em>
+                <p>First visual mockups were delivered and tested by the focus group.</p>
+            </li>
+            <li data-date="20/03/2024">
+                <h2>Development Phase</h2>
+                <em>March 20th, 2024</em>
+                <p>The engineering team started the sprint cycles for the core engine.</p>
+            </li>
+            <li data-date="10/05/2024">
+                <h2>Beta Testing</h2>
+                <em>May 10th, 2024</em>
+                <p>External users were invited to try the platform for the first time.</p>
+            </li>
+            <li data-date="01/07/2024">
+                <h2>Official Launch</h2>
+                <em>July 1st, 2024</em>
+                <p>The product is now live and available to the general public.</p>
+            </li>
+        </ol>
+    </div>
+</section>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
