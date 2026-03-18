@@ -1,89 +1,131 @@
 jQuery(document).ready(function($){
     var timeline = $('.cd-horizontal-timeline'),
-        eventsMinDistance = 120;
+        eventsMinDistance = 150; // Spacing between dots on the line
 
     if(timeline.length > 0) {
-        var tc = {};
-        tc.timelineWrapper    = timeline.find('.events-wrapper');
-        tc.eventsWrapper      = tc.timelineWrapper.children('.events');
-        tc.fillingLine        = tc.eventsWrapper.children('.filling-line');
-        tc.timelineEvents     = tc.eventsWrapper.find('a');
-        tc.timelineNavigation = timeline.find('.cd-timeline-navigation');
-        tc.eventsContent      = timeline.children('.events-content');
+        var timelineComponents = {};
+        // Cache elements
+        timelineComponents['timelineWrapper'] = timeline.find('.events-wrapper');
+        timelineComponents['eventsWrapper'] = timelineComponents['timelineWrapper'].children('.events');
+        timelineComponents['fillingLine'] = timelineComponents['eventsWrapper'].children('.filling-line');
+        timelineComponents['timelineEvents'] = timelineComponents['eventsWrapper'].find('a');
+        timelineComponents['timelineNavigation'] = timeline.find('.cd-timeline-navigation');
+        timelineComponents['eventsContent'] = timeline.children('.events-content');
+        timelineComponents['progressCount'] = $('#progressCount');
+        timelineComponents['progressFill'] = $('#progressFill');
 
-        var total = tc.timelineEvents.length;
-
-        initTimeline(tc);
+        // Initialize timeline positions and widths
+        initTimeline(timelineComponents);
         timeline.addClass('loaded');
+        updateProgressBar(timelineComponents);
 
-        tc.timelineEvents.on('click', function(e){
-            e.preventDefault();
-            updateSelectedEvent($(this), tc);
-            updateNavigationState(tc);
+        // Click on a date dot
+        timelineComponents['timelineEvents'].on('click', function(event){
+            event.preventDefault();
+            var selectedItem = $(this);
+            updateSelectedEvent(selectedItem, timelineComponents);
         });
-        tc.timelineNavigation.on('click', '.next', function(e){ e.preventDefault(); updateNavigation(tc, 'next'); });
-        tc.timelineNavigation.on('click', '.prev', function(e){ e.preventDefault(); updateNavigation(tc, 'prev'); });
+
+        // Click on navigation arrows
+        timelineComponents['timelineNavigation'].on('click', '.next', function(event){
+            event.preventDefault();
+            updateNavigation(timelineComponents, 'next');
+        });
+
+        timelineComponents['timelineNavigation'].on('click', '.prev', function(event){
+            event.preventDefault();
+            updateNavigation(timelineComponents, 'prev');
+        });
+
+        // Handle browser resize for the iframe height
+        $(window).on('resize', function() {
+            sendHeightToParent();
+        });
     }
 
-    function initTimeline(c) {
+    function initTimeline(components) {
         var totalWidth = 0;
-        var offset = 20;
-        for(var i = 0; i < c.timelineEvents.length; i++) {
-            c.timelineEvents.eq(i).css('left', (offset + i * eventsMinDistance) + 'px');
-            totalWidth += eventsMinDistance;
+        for (i = 0; i < components['timelineEvents'].length; i++) { 
+            var distance = i * eventsMinDistance;
+            components['timelineEvents'].eq(i).css('left', distance + 'px');
+            totalWidth = distance + eventsMinDistance;
         }
-        totalWidth += offset * 2;
-        c.eventsWrapper.css('width', totalWidth + 'px');
-        updateFillingLine(c.timelineEvents.eq(0), c.fillingLine, totalWidth, c);
-        updateNavigationState(c);
-        updateProgress(c);
+        components['eventsWrapper'].css('width', totalWidth + 'px');
+        
+        // Initial filling line and height check
+        updateFillingLine(components['timelineEvents'].filter('.selected'), components['fillingLine'], totalWidth);
+        setTimeout(sendHeightToParent, 500);
     }
 
-    function updateSelectedEvent(el, c) {
-        var date = el.data('date');
-        c.eventsContent.find('.selected').removeClass('selected');
-        c.timelineEvents.removeClass('selected');
-        el.addClass('selected');
-        c.eventsContent.find('[data-date="'+ date +'"]').addClass('selected');
-        updateFillingLine(el, c.fillingLine, c.eventsWrapper.width(), c);
-        updateTimelinePosition(el, c);
-        updateProgress(c);
+    function updateSelectedEvent(element, components) {
+        var eventDate = element.data('date'),
+            visibleContent = components['eventsContent'].find('.selected'),
+            selectedContent = components['eventsContent'].find('[data-date="'+ eventDate +'"]');
+        
+        components['timelineEvents'].removeClass('selected');
+        element.addClass('selected');
+        
+        visibleContent.removeClass('selected');
+        selectedContent.addClass('selected');
+
+        updateFillingLine(element, components['fillingLine'], components['eventsWrapper'].width());
+        updateTimelinePosition(element, components);
+        updateProgressBar(components);
+        
+        // Notify parent iframe to resize
+        setTimeout(sendHeightToParent, 300);
     }
 
-    function updateTimelinePosition(el, c) {
-        var left  = parseFloat(window.getComputedStyle(el.get(0)).left),
-            width = parseFloat(c.timelineWrapper.css('width'));
-        var tx = width / 2 - left;
-        if(tx > 0) tx = 0;
-        var min = width - c.eventsWrapper.width();
-        if(tx < min) tx = min;
-        c.eventsWrapper.css('transform', 'translateX('+ tx +'px)');
+    function updateTimelinePosition(element, components) {
+        var eventLeft = parseFloat(element.css('left')),
+            timelineWidth = parseFloat(components['timelineWrapper'].css('width'));
+        
+        var translateValue = timelineWidth/2 - eventLeft;
+        
+        // Constraint checking
+        if(translateValue > 0) translateValue = 0;
+        var maxTranslate = timelineWidth - components['eventsWrapper'].width();
+        if(translateValue < maxTranslate) translateValue = maxTranslate;
+
+        components['eventsWrapper'].css('transform', 'translateX(' + translateValue + 'px)');
+        
+        // Update arrow states
+        components['timelineNavigation'].find('.prev').toggleClass('inactive', translateValue === 0);
+        components['timelineNavigation'].find('.next').toggleClass('inactive', translateValue === maxTranslate);
     }
 
-    function updateFillingLine(sel, line, totalWidth, components) {
-        var idx = components.timelineEvents.index(sel);
-        var total = components.timelineEvents.length;
-        var scaleValue = idx === total - 1 ? 1 : parseFloat(sel.css('left')) / totalWidth;
-        line.css('transform', 'scaleX(' + scaleValue + ')');
+    function updateFillingLine(selectedEvent, fillingLine, totalWidth) {
+        var eventLeft = parseFloat(selectedEvent.css('left'));
+        var scaleValue = eventLeft / totalWidth;
+        fillingLine.css('transform', 'scaleX(' + scaleValue + ')');
     }
 
-    function updateNavigation(c, dir) {
-        var sel  = c.eventsWrapper.find('.selected');
-        var next = dir === 'next' ? sel.parent('li').next('li').children('a') : sel.parent('li').prev('li').children('a');
-        if(next.length) { updateSelectedEvent(next, c); updateNavigationState(c); }
+    function updateProgressBar(components) {
+        var totalItems = components['timelineEvents'].length;
+        var currentIndex = components['timelineEvents'].index(components['timelineEvents'].filter('.selected')) + 1;
+        
+        // Update "1 / 19" text
+        components['progressCount'].text(currentIndex + ' / ' + totalItems);
+        
+        // Update bottom progress bar fill percentage
+        var progressPercent = (currentIndex / totalItems) * 100;
+        components['progressFill'].css('width', progressPercent + '%');
     }
 
-    function updateNavigationState(c) {
-        var sel = c.eventsWrapper.find('.selected');
-        c.timelineNavigation.find('.prev').toggleClass('inactive', !sel.parent('li').prev('li').length);
-        c.timelineNavigation.find('.next').toggleClass('inactive', !sel.parent('li').next('li').length);
+    function updateNavigation(components, direction) {
+        var selectedEvent = components['timelineEvents'].filter('.selected');
+        var nextEvent = (direction === 'next') ? selectedEvent.parent('li').next('li').children('a') : selectedEvent.parent('li').prev('li').children('a');
+        
+        if(nextEvent.length > 0) {
+            updateSelectedEvent(nextEvent, components);
+        }
     }
 
-    function updateProgress(c) {
-        var idx = c.timelineEvents.index(c.eventsWrapper.find('.selected'));
-        var total = c.timelineEvents.length;
-        var pct = total === 1 ? 100 : (idx / (total - 1)) * 100;
-        $('#progressFill').css('width', pct + '%');
-        $('#progressCount').text((idx + 1) + ' / ' + total);
+    // Dynamic Iframe Height function
+    function sendHeightToParent() {
+        if (window.parent && window.parent.postMessage) {
+            var height = document.body.scrollHeight;
+            window.parent.postMessage({ 'height': height }, '*');
+        }
     }
 });
