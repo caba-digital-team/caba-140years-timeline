@@ -1,10 +1,10 @@
 jQuery(document).ready(function($){
     var timeline = $('.cd-horizontal-timeline'),
-        eventsMinDistance = 150; // Spacing between dots on the line
+        eventsMinDistance = 150,
+        leftPadding = 60; // FIX 1: Adds a buffer so 1880 isn't cut off
 
     if(timeline.length > 0) {
         var timelineComponents = {};
-        // Cache elements
         timelineComponents['timelineWrapper'] = timeline.find('.events-wrapper');
         timelineComponents['eventsWrapper'] = timelineComponents['timelineWrapper'].children('.events');
         timelineComponents['fillingLine'] = timelineComponents['eventsWrapper'].children('.filling-line');
@@ -14,19 +14,15 @@ jQuery(document).ready(function($){
         timelineComponents['progressCount'] = $('#progressCount');
         timelineComponents['progressFill'] = $('#progressFill');
 
-        // Initialize timeline positions and widths
         initTimeline(timelineComponents);
         timeline.addClass('loaded');
         updateProgressBar(timelineComponents);
 
-        // Click on a date dot
         timelineComponents['timelineEvents'].on('click', function(event){
             event.preventDefault();
-            var selectedItem = $(this);
-            updateSelectedEvent(selectedItem, timelineComponents);
+            updateSelectedEvent($(this), timelineComponents);
         });
 
-        // Click on navigation arrows
         timelineComponents['timelineNavigation'].on('click', '.next', function(event){
             event.preventDefault();
             updateNavigation(timelineComponents, 'next');
@@ -37,7 +33,6 @@ jQuery(document).ready(function($){
             updateNavigation(timelineComponents, 'prev');
         });
 
-        // Handle browser resize for the iframe height
         $(window).on('resize', function() {
             sendHeightToParent();
         });
@@ -45,16 +40,15 @@ jQuery(document).ready(function($){
 
     function initTimeline(components) {
         var totalWidth = 0;
-        for (i = 0; i < components['timelineEvents'].length; i++) { 
-            var distance = i * eventsMinDistance;
-            components['timelineEvents'].eq(i).css('left', distance + 'px');
+        components['timelineEvents'].each(function(index){
+            // Apply the padding to the first element and space others accordingly
+            var distance = leftPadding + (index * eventsMinDistance);
+            $(this).css('left', distance + 'px');
             totalWidth = distance + eventsMinDistance;
-        }
-        components['eventsWrapper'].css('width', totalWidth + 'px');
+        });
         
-        // Initial filling line and height check
-        updateFillingLine(components['timelineEvents'].filter('.selected'), components['fillingLine'], totalWidth);
-        setTimeout(sendHeightToParent, 500);
+        components['eventsWrapper'].css('width', totalWidth + 'px');
+        updateSelectedEvent(components['timelineEvents'].filter('.selected'), components);
     }
 
     function updateSelectedEvent(element, components) {
@@ -72,26 +66,25 @@ jQuery(document).ready(function($){
         updateTimelinePosition(element, components);
         updateProgressBar(components);
         
-        // Notify parent iframe to resize
         setTimeout(sendHeightToParent, 300);
     }
 
     function updateTimelinePosition(element, components) {
         var eventLeft = parseFloat(element.css('left')),
-            timelineWidth = parseFloat(components['timelineWrapper'].css('width'));
+            timelineWidth = parseFloat(components['timelineWrapper'].css('width')),
+            wrapperWidth = parseFloat(components['eventsWrapper'].css('width'));
         
+        // FIX 2: Better math for centering the selected date
         var translateValue = timelineWidth/2 - eventLeft;
         
-        // Constraint checking
         if(translateValue > 0) translateValue = 0;
-        var maxTranslate = timelineWidth - components['eventsWrapper'].width();
-        if(translateValue < maxTranslate) translateValue = maxTranslate;
+        if(translateValue < timelineWidth - wrapperWidth) translateValue = timelineWidth - wrapperWidth;
 
         components['eventsWrapper'].css('transform', 'translateX(' + translateValue + 'px)');
         
-        // Update arrow states
-        components['timelineNavigation'].find('.prev').toggleClass('inactive', translateValue === 0);
-        components['timelineNavigation'].find('.next').toggleClass('inactive', translateValue === maxTranslate);
+        // Update arrow button opacity based on position
+        components['timelineNavigation'].find('.prev').toggleClass('inactive', (element.parent('li').is(':first-child')));
+        components['timelineNavigation'].find('.next').toggleClass('inactive', (element.parent('li').is(':last-child')));
     }
 
     function updateFillingLine(selectedEvent, fillingLine, totalWidth) {
@@ -103,25 +96,22 @@ jQuery(document).ready(function($){
     function updateProgressBar(components) {
         var totalItems = components['timelineEvents'].length;
         var currentIndex = components['timelineEvents'].index(components['timelineEvents'].filter('.selected')) + 1;
-        
-        // Update "1 / 19" text
         components['progressCount'].text(currentIndex + ' / ' + totalItems);
-        
-        // Update bottom progress bar fill percentage
         var progressPercent = (currentIndex / totalItems) * 100;
         components['progressFill'].css('width', progressPercent + '%');
     }
 
     function updateNavigation(components, direction) {
         var selectedEvent = components['timelineEvents'].filter('.selected');
-        var nextEvent = (direction === 'next') ? selectedEvent.parent('li').next('li').children('a') : selectedEvent.parent('li').prev('li').children('a');
+        var nextStep = (direction === 'next') 
+            ? selectedEvent.parent('li').next('li').children('a') 
+            : selectedEvent.parent('li').prev('li').children('a');
         
-        if(nextEvent.length > 0) {
-            updateSelectedEvent(nextEvent, components);
+        if(nextStep.length > 0) {
+            updateSelectedEvent(nextStep, components);
         }
     }
 
-    // Dynamic Iframe Height function
     function sendHeightToParent() {
         if (window.parent && window.parent.postMessage) {
             var height = document.body.scrollHeight;
